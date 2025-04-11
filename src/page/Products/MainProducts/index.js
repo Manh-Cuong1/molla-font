@@ -84,7 +84,6 @@ export default function MainProducts() {
                         Đang có <span className={cx('number')}>{products.length}</span> sản phẩm
                     </span>
                 </div>
-
                 <div className={cx('sortGroup')}>
                     <div className={cx('sort')}>
                         <label>Sắp xếp: </label>
@@ -101,7 +100,7 @@ export default function MainProducts() {
                             <Select defaultValue="default" style={{ width: 160 }}>
                                 <Option value="default">Mặc định</Option>
                                 <Option value="lowest">Giá từ thấp đến cao</Option>
-                                <Option value="highest">Giá từ cao xuống thấp</Option>
+                                <Option value="highest">Giá từ cao xuống thấpp</Option>
                             </Select>
                         </div>
                     </div>
