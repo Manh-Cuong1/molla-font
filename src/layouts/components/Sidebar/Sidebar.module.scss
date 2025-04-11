@@ -1,0 +1,83 @@
+$colorOverlay: rgba(15, 15, 15, 0.8);
+
+.wrapper {
+    position: relative;
+    transition: 0.5s;
+}
+.overlay {
+    position: fixed;
+    z-index: 999;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: var(--overlay-color);
+    transition: 0.5s;
+    display: none;
+    opacity: 0;
+}
+
+.sidebar {
+    position: fixed;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    z-index: 9999;
+
+    display: block;
+    min-width: 280px;
+    padding: 20px;
+    transform: translateX(-100%);
+    transition: 0.5s;
+    background-color: var(--header-color);
+    // animation: fadeIn 0.5s ease;
+
+    .header {
+        display: flex;
+        justify-content: flex-end;
+        flex-direction: column;
+        color: var(--white-color);
+        // height: 100px;
+        width: 100%;
+        z-index: 10;
+        .close {
+            display: block;
+            margin-left: auto;
+            padding: 0 0 15px 15px;
+            cursor: pointer;
+        }
+    }
+
+    .menu-list {
+        margin-top: 20px;
+    }
+}
+
+.isShow .overlay {
+    display: block;
+    transition: 0.5s;
+    opacity: 1;
+}
+.isShow .sidebar {
+    transform: translateX(0);
+    transition: 0.5s ease;
+    // animation: fadeOut 0.5s ease;
+}
+
+@keyframes fadeOut {
+    0% {
+        transform: translateX(-100%);
+    }
+    100% {
+        transform: translateX(0);
+    }
+}
+@keyframes fadeIn {
+    0% {
+        transform: translateX(0);
+    }
+    100% {
+        transform: translateX(-100%);
+        // display: none;
+    }
+}

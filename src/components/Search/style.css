@@ -1,0 +1,9 @@
+/* .ant-select-selection__placeholder {
+    color: blue;
+} */
+.ant-select-selection-placeholder {
+    color: #fff;
+}
+.ant-select-selection-item {
+    color: #fff;
+}
