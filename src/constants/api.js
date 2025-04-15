@@ -8,16 +8,14 @@ export const PROD_API_URL = 'https://api-new-8e6b.onrender.com/';
 // Môi trường development (local)
 export const DEV_API_URL = 'http://localhost:8000/';
 
-// Tự động thêm CORS proxy nếu cần
-export const BASE_API_URL = process.env.NODE_ENV === 'development' 
-    ? `${CORS_PROXY}${API_URL}`
-    : API_URL;
+// API URL (thay thế bằng URL từ localtunnel)
+export const BASE_API_URL = 'https://molla-back.onrender.com/';
 
 export const AUTH_URL = {
     LOGIN: 'api/v1/login',
 };
 export const PRODUCTS = {
-    LIST: `api/v1/products`,
+    LIST: `api/products`,
     PRODUCT: `api/v1/admin/product/`,
     CREATE: `api/v1/admin/product/new`,
 };

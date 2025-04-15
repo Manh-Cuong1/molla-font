@@ -4,7 +4,7 @@ import { useEffect, useState } from 'react';
 import ProductItem from '~/components/ProductItem';
 import './custom.scss';
 import styles from './MainProducts.module.scss';
-import { BASE_API_URL, PRODUCTS } from '~/constants/api';
+import { BASE_API_URL, PRODUCTS } from '../../../constants/api';
 
 const { Option } = Select;
 const cx = classNames.bind(styles);
@@ -20,33 +20,15 @@ export default function MainProducts() {
     useEffect(() => {
         const fetchProducts = async () => {
             try {
-                const res = await fetch(`${BASE_API_URL}${PRODUCTS.LIST}`, {
-                    method: 'GET',
-                    headers: {
-                        'Accept': 'application/json',
-                        'Content-Type': 'application/json',
-                        'Origin': window.location.origin
-                    },
-                    mode: 'cors',
-                    credentials: 'omit'
-                });
-                
+                const res = await fetch(`${BASE_API_URL}${PRODUCTS.LIST}`);
                 if (!res.ok) {
                     throw new Error(`HTTP error! status: ${res.status}`);
                 }
+                const result = await res.json();
+                console.log('✅ Dữ liệu fetch được:', result);
                 
-                const contentType = res.headers.get("content-type");
-                if (!contentType || !contentType.includes("application/json")) {
-                    throw new Error("API không trả về dữ liệu JSON!");
-                }
-
-                const data = await res.json();
-                console.log('Dữ liệu fetch được:', data); // Debug
-                
-                if (Array.isArray(data)) {
-                    setProducts(data);
-                } else if (data.products && Array.isArray(data.products)) {
-                    setProducts(data.products);
+                if (result.success && Array.isArray(result.data)) {
+                    setProducts(result.data);
                 } else {
                     throw new Error('Dữ liệu không đúng định dạng');
                 }
@@ -84,6 +66,7 @@ export default function MainProducts() {
                         Đang có <span className={cx('number')}>{products.length}</span> sản phẩm
                     </span>
                 </div>
+
                 <div className={cx('sortGroup')}>
                     <div className={cx('sort')}>
                         <label>Sắp xếp: </label>
@@ -100,7 +83,7 @@ export default function MainProducts() {
                             <Select defaultValue="default" style={{ width: 160 }}>
                                 <Option value="default">Mặc định</Option>
                                 <Option value="lowest">Giá từ thấp đến cao</Option>
-                                <Option value="highest">Giá từ cao xuống thấpp</Option>
+                                <Option value="highest">Giá từ cao xuống thấp</Option>
                             </Select>
                         </div>
                     </div>
@@ -115,33 +98,27 @@ export default function MainProducts() {
                 <>
                     <ul className={cx('list')}>
                         <Row gutter={[20, 30]}>
-                            {currentProducts && currentProducts.length > 0 ? (
-                                currentProducts.map((item) => (
-                                    <Col key={item.id} xs={24} sm={12} md={8}>
-                                        <ProductItem
-                                            id={item.id}
-                                            category={item.category}
-                                            image={item.image}
-                                            price={item.price}
-                                            name={item.name}
-                                            rate={item.rating}
-                                        />
-                                    </Col>
-                                ))
-                            ) : (
-                                <div className={cx('no-products')}>Không có sản phẩm nào</div>
-                            )}
+                            {currentProducts.map((item) => (
+                                <Col key={item.id} xs={24} sm={12} md={8}>
+                                    <ProductItem
+                                        id={item.id}
+                                        category={item.category}
+                                        image={item.image}
+                                        price={item.price}
+                                        name={item.name}
+                                        rate={item.rating}
+                                    />
+                                </Col>
+                            ))}
                         </Row>
                     </ul>
-                    {products.length > 0 && (
-                        <Pagination
-                            current={currentPage}
-                            defaultPageSize={productsPerPage}
-                            total={products.length}
-                            onChange={handleChangePage}
-                            style={{ textAlign: 'center', marginTop: 20 }}
-                        />
-                    )}
+                    <Pagination
+                        current={currentPage}
+                        defaultPageSize={productsPerPage}
+                        total={products.length}
+                        onChange={handleChangePage}
+                        style={{ textAlign: 'center', marginTop: 20 }}
+                    />
                 </>
             )}
         </div>
